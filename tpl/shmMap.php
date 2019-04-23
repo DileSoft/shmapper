@@ -10,10 +10,10 @@ function draw_shMap($map, $args )
 	$legend		= "";
 	
 	$mapType	= $map->get_meta("map_type");
-	$mapType	= $mapType && ShMapper::$options['map_api']  == array_keys($mapType)[0]
+	$mapType	= $mapType && ShmShmapper::$options['map_api']  == array_keys($mapType)[0]
 		? $mapType 
 		: ShmMap::get_map_types();
-	$mapType	= $mapType[ ShMapper::$options['map_api'] ][0];
+	$mapType	= $mapType[ ShmShmapper::$options['map_api'] ][0];
 	$id 		= $map->id;
 	$muniq		= isset($args['uniq']) ? $args['uniq'] : $id;
 	$uniq		= "ShmMap$id$muniq";
@@ -45,7 +45,7 @@ function draw_shMap($map, $args )
 			{
 				$term = get_term($term_id);
 				$color = get_term_meta($term_id, "color", true);
-				$leg .= "<div class='shm-icon' style='background-color:$color;'><img src='" . ShMapPointType:: get_icon_src ($term_id, 20)[0] . "' width='20' /></div> <span  class='shm-icon-name'>" . $term->name . "</span>";
+				$leg .= "<div class='shm-icon' style='background-color:$color;'><img src='" . ShmMapPointType:: get_icon_src ($term_id, 20)[0] . "' width='20' /></div> <span  class='shm-icon-name'>" . $term->name . "</span>";
 			}
 			$legend = "
 			<div class='shm-legend' style='width:$width;'>
@@ -56,10 +56,10 @@ function draw_shMap($map, $args )
 	if( $is_filtered )
 	{
 		$includes = $map->get_include_types();
-		$filters = ShMapPointType::get_ganre_swicher([
+		$filters = ShmMapPointType::get_ganre_swicher([
 			'prefix'		=> 'filtered'.$uniq, 
 			'row_style'		=> "float:right;margin-left: 5px;margin-right: 0px;",
-			"selected"		=> ShMapPointType::get_all_ids(),
+			"selected"		=> ShmMapPointType::get_all_ids(),
 			"includes"		=> $includes,
 			"col_width"		=> 2
 		], "checkbox",  "stroke" );

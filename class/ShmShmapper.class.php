@@ -1,6 +1,6 @@
 <?php
 
-class ShMapper 
+class ShmShmapper
 {
 	static function activate()
 	{
@@ -191,7 +191,7 @@ class ShMapper
 	static function add_admin_js_script()
 	{	
 		//css
-		wp_register_style("ShMapper", SHM_URLPATH . 'assets/css/ShMapper.css', array());
+		wp_register_style("ShmShmapper", SHM_URLPATH . 'assets/css/ShMapper.css', array());
 		wp_enqueue_style( "ShMapper");
 		//js
 		wp_register_script("jquery", 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js' , array());

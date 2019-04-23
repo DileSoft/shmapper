@@ -25,7 +25,7 @@ function shmMap($args)
 	{
 		$html 	.= $map->draw($args);		
 	}
-	if( $form_enb && $map->get_meta("is_form") && !ShMapper::$options['shm_map_is_crowdsourced'])
+	if( $form_enb && $map->get_meta("is_form") && !ShmShmapper::$options['shm_map_is_crowdsourced'])
 	{
 		$form_title = $map->get_meta("form_title");
 		$form_forms = $map->get_meta("form_forms");

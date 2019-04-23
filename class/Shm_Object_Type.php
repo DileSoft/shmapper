@@ -1,6 +1,6 @@
 <?php
 	
-	class SMC_Object_Type
+	class Shm_Object_Type
 	{
 		public $object;
 		protected static $_instance;

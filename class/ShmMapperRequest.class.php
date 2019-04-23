@@ -1,6 +1,6 @@
 <?php 
 
-class ShMapperRequest extends SMC_Post
+class ShmMapperRequest extends Shm_Post
 {
 	static function init()
 	{
@@ -95,7 +95,7 @@ class ShMapperRequest extends SMC_Post
 				$term = get_term($term_id, SHM_POINT_TYPE);				
 				if($term_id)
 				{
-					$icon = ShMapPointType::get_icon($term , $obj->get_meta("notified"));
+					$icon = ShmMapPointType::get_icon($term , $obj->get_meta("notified"));
 				}
 				else
 				{
@@ -123,8 +123,8 @@ class ShMapperRequest extends SMC_Post
 	}
 	static function view_admin_edit($obj)
 	{			
-		require_once(SHM_REAL_PATH."class/SMC_Object_type.php");
-		$SMC_Object_type	= SMC_Object_Type::get_instance();
+		require_once(SHM_REAL_PATH."class/Shm_Object_Type.php");
+		$SMC_Object_type	= Shm_Object_Type::get_instance();
 		$bb				= $SMC_Object_type->object [forward_static_call_array( array( get_called_class(),"get_type"), array()) ];	
 		foreach($bb as $key=>$value)
 		{
@@ -156,7 +156,7 @@ class ShMapperRequest extends SMC_Post
 					]);
 					break;
 				case "type":
-					$h = ShMapPointType::get_ganre_swicher([
+					$h = ShmMapPointType::get_ganre_swicher([
 						'selected' 	=> $meta,
 						'prefix'	=> "type",
 						'col_width'	=> 3
@@ -180,8 +180,8 @@ class ShMapperRequest extends SMC_Post
 	}
 	static function save_admin_edit($obj)
 	{
-		require_once(SHM_REAL_PATH."class/SMC_Object_type.php");
-		$SMC_Object_type	= SMC_Object_Type::get_instance();
+		require_once(SHM_REAL_PATH."class/Shm_Object_Type.php");
+		$SMC_Object_type	= Shm_Object_Type::get_instance();
 		$_obj				= $SMC_Object_type->object [static::get_type()];
 		$arr 				= [];
 		foreach($_obj as $key=>$value)

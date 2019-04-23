@@ -59,35 +59,35 @@ define('SHM_CSV_STROKE_SEPARATOR', ';');
 define('SHM_CSV_ROW_SEPARATOR', '
 ');
 
-require_once(SHM_REAL_PATH.'class/ShMapper.class.php');
-require_once(SHM_REAL_PATH.'class/ShMapper_ajax.class.php');
-if(!class_exists("SMC_Post"))
-	require_once(SHM_REAL_PATH.'class/SMC_Post.php');
-if(!class_exists("SMC_Object_type"))
-	require_once(SHM_REAL_PATH.'class/SMC_Object_type.php');
+require_once(SHM_REAL_PATH.'class/ShmShmapper.class.php');
+require_once(SHM_REAL_PATH.'class/ShmMapper_ajax.class.php');
+if(!class_exists("Shm_Post"))
+	require_once(SHM_REAL_PATH.'class/Shm_Post.php');
+if(!class_exists("Shm_Object_Type"))
+	require_once(SHM_REAL_PATH.'class/Shm_Object_Type.php');
 require_once(SHM_REAL_PATH.'class/ShmMap.class.php');
-require_once(SHM_REAL_PATH.'class/ShMapPointType.class.php');
+require_once(SHM_REAL_PATH.'class/ShmMapPointType.class.php');
 require_once(SHM_REAL_PATH.'class/ShmPoint.class.php');
-require_once(SHM_REAL_PATH.'class/ShMapperRequest.class.php');
+require_once(SHM_REAL_PATH.'class/ShmMapperRequest.class.php');
 require_once(SHM_REAL_PATH.'class/ShmForm.class.php');
-require_once(SHM_REAL_PATH.'class/ShMapper_Assistants.class.php');
+require_once(SHM_REAL_PATH.'class/ShmMapper_Assistants.class.php');
 require_once(SHM_REAL_PATH.'shortcode/shm_shortcodes.php');
 require_once(SHM_REAL_PATH.'widget/ShMap.widget.php');
 
-register_activation_hook( __FILE__, array( ShMapper, 'activate' ) );
+register_activation_hook( __FILE__, array( ShmShmapper, 'activate' ) );
 if (function_exists('register_deactivation_hook'))
 {
-	register_deactivation_hook(__FILE__, array(ShMapper, 'deactivate'));
+	register_deactivation_hook(__FILE__, array(ShmShmapper, 'deactivate'));
 }
 add_action("init", "init_shmapper", 1);
 function init_shmapper()
 {
-	ShMapper::get_instance();
-	ShMapper_Assistants::get_instance();
-	ShMapper_ajax::get_instance();
+	ShmShmapper::get_instance();
+	ShmMapper_Assistants::get_instance();
+	ShmMapper_ajax::get_instance();
 	ShmMap::init();
-	ShMapperRequest::init();
-	ShMapPointType::init();
+	ShmMapperRequest::init();
+	ShmMapPointType::init();
 	ShmPoint::init();
 	ShmForm::init();
 }

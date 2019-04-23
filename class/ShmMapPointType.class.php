@@ -1,6 +1,6 @@
 <?php
 
-class ShMapPointType
+class ShmMapPointType
 {
 	static function init()
 	{

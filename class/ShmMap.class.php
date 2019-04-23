@@ -1,5 +1,5 @@
 <?php
-class ShmMap extends SMC_Post
+class ShmMap extends Shm_Post
 {
 	static function get_map_types()
 	{
@@ -712,8 +712,8 @@ class ShmMap extends SMC_Post
 			$pnt->width 		= $pnt->width 	? $pnt->width 	: 30;
 			$pnt->type 			= $type ? $type->name : "";
 			$pnt->term_id 		= $type ? $type->term_id: -1;
-			$pnt->icon 			= $type ? ShMapPointType::get_icon_src( $type->term_id )[0] : "";
-			//$pnt->width 		= ShMapPointType::get_icon_src( $type->term_id )[2]/ShMapPointType::get_icon_src( $type->term_id )[1] * $pnt->height ;
+			$pnt->icon 			= $type ? ShmMapPointType::get_icon_src( $type->term_id )[0] : "";
+			//$pnt->width 		= ShmMapPointType::get_icon_src( $type->term_id )[2]/ShmMapPointType::get_icon_src( $type->term_id )[1] * $pnt->height ;
 			//$pnt->width 		= $pnt->width ? $pnt->width : $pnt->height;
 			$p[] 	= $pnt;
 		}
@@ -782,7 +782,7 @@ class ShmMap extends SMC_Post
 		{
 			$params = [ 
 				"id" 		=> "map_radio", 
-				"name" 		=> "type_radio[" . ShMapper::$options['map_api'] . "][]", 
+				"name" 		=> "type_radio[" . ShmShmapper::$options['map_api'] . "][]",
 				'selected' 	=> [] 
 			];
 		}
@@ -790,7 +790,7 @@ class ShmMap extends SMC_Post
 		<div class='shm_type_radio shm-row'>
 			<div class='shm-12'>";
 		
-		if( ShMapper::$options['map_api'] != 2 )
+		if( ShmShmapper::$options['map_api'] != 2 )
 		{
 			$html .= "<div class='shm-admin-block'>
 					<h3>Yandex Map</h3>";

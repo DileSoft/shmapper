@@ -210,7 +210,7 @@ class ShmForm
 								<small class=''>".
 									__("Placemark types", SHMAPPER) .
 								"</small>".
-								ShMapPointType::get_ganre_swicher([
+								ShmMapPointType::get_ganre_swicher([
 									"prefix" 	=> "ganre$id". MD5(rand(0,100000000)), 
 									"id" 		=> $id, 
 									"name" 		=> "form_forms[$id][placemarks]", 
@@ -282,7 +282,7 @@ class ShmForm
 						<small class=''>".
 							__("Placemark types", SHMAPPER) .
 						"</small>".
-						ShMapPointType::get_ganre_swicher([
+						ShmMapPointType::get_ganre_swicher([
 							"prefix" 	=> "ganre$id". MD5(rand(0,100000000)), 
 							"id" 		=> $id, 
 							"name" 		=> "form_forms[$id][placemarks]", 
@@ -360,7 +360,7 @@ class ShmForm
 						<small class=''>".
 							__("Placemark types", SHMAPPER) .
 						"</small>".
-						ShMapPointType::get_ganre_swicher([
+						ShmMapPointType::get_ganre_swicher([
 							"prefix" 	=> "ganre$id", 
 							"id" 		=> $id, 
 							"name" 		=> "form_forms[$id][placemarks]", 
@@ -449,7 +449,7 @@ class ShmForm
 						foreach($terms as $term_id)
 						{
 							$clr 	= get_term_meta($term_id, "color", true);
-							$icon 	= ShMapPointType::get_icon_src($term_id)[0];
+							$icon 	= ShmMapPointType::get_icon_src($term_id)[0];
 							if($icon)
 							{
 								$icons .= "
@@ -461,7 +461,7 @@ class ShmForm
 								$diid = $map->get_meta("default_icon_id");
 								$icon	= wp_get_attachment_image_src($diid, [60, 60])[0];			
 								if(!$icon)
-									$icon = ShMapper::$options['map_api'] == 2 
+									$icon = ShmShmapper::$options['map_api'] == 2
 									? "https://unpkg.com/leaflet@1.3.4/dist/images/marker-icon.png"
 									: SHM_URLPATH . 'assets/img/ym_default.png';								
 								$icons .=  !$icon ? "
@@ -496,7 +496,7 @@ class ShmForm
 			$icon	= wp_get_attachment_image_src($diid, [60, 60])[0];
 			
 			if(!$icon)
-				$icon = ShMapper::$options['map_api'] == 2 ? "https://unpkg.com/leaflet@1.3.4/dist/images/marker-icon.png"
+				$icon = ShmShmapper::$options['map_api'] == 2 ? "https://unpkg.com/leaflet@1.3.4/dist/images/marker-icon.png"
 				: SHM_URLPATH . 'assets/img/ym_default.png';
 			$desc	= "
 			<div class='shm-float-right'>	

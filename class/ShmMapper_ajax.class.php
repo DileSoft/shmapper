@@ -10,7 +10,7 @@ class ExceptionWriter extends Error
     }
 }
 
-class ShMapper_ajax
+class ShmMapper_ajax
 {
 	static $instance;
 	static function get_instance()
@@ -35,10 +35,10 @@ class ShMapper_ajax
 		/**/
 		$data = $_POST;
 		$data['elem']	= explode(",", $data['elem']);
-		if( ShMapper::$options['shm_settings_captcha'] )
+		if( ShmShmapper::$options['shm_settings_captcha'] )
 		{
 			require_once( SHM_REAL_PATH . "assets/recaptcha-php/recaptcha.class.php" );
-			$reCaptcha = new ReCaptcha( ShMapper::$options['shm_captcha_secretKey'] );					
+			$reCaptcha = new ReCaptcha( ShmShmapper::$options['shm_captcha_secretKey'] );
 			$response = $reCaptcha->verifyResponse(
 				$_SERVER["REMOTE_ADDR"],
 				$data['cap']
@@ -46,20 +46,20 @@ class ShMapper_ajax
 			switch( $response->success )
 			{
 				case(true):
-					$res 	= ShMapperRequest::insert($data);
-					$msg 	= ShMapper::$options['shm_succ_request_text'];
+					$res 	= ShmMapperRequest::insert($data);
+					$msg 	= ShmShmapper::$options['shm_succ_request_text'];
 					break;
 				default:
-					$msg 	= ShMapper::$options['shm_error_request_text'] . " : " . $response->errorCodes->msg;
+					$msg 	= ShmShmapper::$options['shm_error_request_text'] . " : " . $response->errorCodes->msg;
 					break;
 			}
-			$grec = ShMapper_Assistants::shm_after_request_form("");
+			$grec = ShmMapper_Assistants::shm_after_request_form("");
 		}
 		else
 		{
 			
-			$res 	= ShMapperRequest::insert($data);
-			$msg	= ShMapper::$options['shm_succ_request_text'];
+			$res 	= ShmMapperRequest::insert($data);
+			$msg	= ShmShmapper::$options['shm_succ_request_text'];
 		}
 		//load image
 		if( $res AND $res->id > 1 )		
@@ -68,14 +68,14 @@ class ShMapper_ajax
 		}
 		$form = ShmForm::form( get_post_meta( $data['id'], "form_forms", true ), ShmMap::get_instance($data['id'])  );
 		$answer = [
-			"reload"		=> ShMapper::$options['shm_reload'] ? 1 : 0,
+			"reload"		=> ShmShmapper::$options['shm_reload'] ? 1 : 0,
 			'res'			=> $res,
 			'data'			=> $data,
 			"msg"			=> $msg,
 			//"form"		=> $form,
 			"grec"			=> $grec,
 			//"attach_id"	=> $attach_id,
-			'grecaptcha'	=> ShMapper::$options['shm_settings_captcha']
+			'grecaptcha'	=> ShmShmapper::$options['shm_settings_captcha']
 		];
 		wp_die( json_encode( $answer ) );
 	}
@@ -134,15 +134,15 @@ class ShMapper_ajax
 			case "shm_wnext":	
 				$step	= (int)get_option("shm_wizard_step");
 				$step++;
-				if($step < count(ShMapper::get_wizzard_lst()))
+				if($step < count(ShmShmapper::get_wizzard_lst()))
 				{
-					$stepData 	= ShMapper::get_wizzard_lst()[$step];
+					$stepData 	= ShmShmapper::get_wizzard_lst()[$step];
 					$messge		= __("Next step", SHMAPPER);
 				}
 				else
 				{
-					ShMapper::$options["wizzard"] = 0;
-					ShMapper::update_options();
+					ShmShmapper::$options["wizzard"] = 0;
+					ShmShmapper::update_options();
 					$step = 0;
 					$messge		= __("Congratulation! That's all!", SHMAPPER);
 				}
@@ -156,8 +156,8 @@ class ShMapper_ajax
 				);
 				break;			
 			case "shm_wclose":	
-				ShMapper::$options["wizzard"] = 0;
-				ShMapper::update_options();
+				ShmShmapper::$options["wizzard"] = 0;
+				ShmShmapper::update_options();
 				update_option("shm_wizard_step", 0);
 				$d = array(	
 					$params[0],
@@ -167,8 +167,8 @@ class ShMapper_ajax
 				);
 				break; 			
 			case "shm_wrestart":	
-				ShMapper::$options["wizzard"] = 1;
-				ShMapper::update_options();
+				ShmShmapper::$options["wizzard"] = 1;
+				ShmShmapper::update_options();
 				update_option("shm_wizard_step", 0);
 				$d = array(	
 					$params[0],
@@ -179,7 +179,7 @@ class ShMapper_ajax
 				break; 	
 			case "shm_notify_req":	
 				$req_id = $params[1];
-				$req = ShMapperRequest::get_instance($req_id);
+				$req = ShmMapperRequest::get_instance($req_id);
 				$new_id = $req->notify();
 				$d = array(	
 					$params[0],
@@ -193,7 +193,7 @@ class ShMapper_ajax
 				break;		
 			case "shm_trash_req":	
 				$req_id = $params[1];
-				$req = ShMapperRequest::get_instance($req_id);
+				$req = ShmMapperRequest::get_instance($req_id);
 				wp_trash_post( $req_id );
 				$d = array(	
 					$params[0],
@@ -243,10 +243,10 @@ class ShMapper_ajax
 				break;		
 			case "shm_set_req":	
 				$data = $params[1];
-				if( ShMapper::$options['shm_settings_captcha'] )
+				if( ShmShmapper::$options['shm_settings_captcha'] )
 				{
 					require_once( SHM_REAL_PATH . "assets/recaptcha-php/recaptcha.class.php" );
-					$reCaptcha = new ReCaptcha( ShMapper::$options['shm_captcha_secretKey'] );					
+					$reCaptcha = new ReCaptcha( ShmShmapper::$options['shm_captcha_secretKey'] );
 					$response = $reCaptcha->verifyResponse(
 						$_SERVER["REMOTE_ADDR"],
 						$data['cap']
@@ -254,21 +254,21 @@ class ShMapper_ajax
 					switch( $response->success )
 					{
 						case(true):
-							$res 	= ShMapperRequest::insert($data);
-							$msg 	= ShMapper::$options['shm_succ_request_text'];
+							$res 	= ShmMapperRequest::insert($data);
+							$msg 	= ShmShmapper::$options['shm_succ_request_text'];
 							break;
 						default:
-							$msg 	= ShMapper::$options['shm_error_request_text'] . " : " . $response->errorCodes->msg;
+							$msg 	= ShmShmapper::$options['shm_error_request_text'] . " : " . $response->errorCodes->msg;
 							break;
 					}
-					$grec = ShMapper_Assistants::shm_after_request_form("");
+					$grec = ShmMapper_Assistants::shm_after_request_form("");
 					/**/
 					//$msg = "msg: ". $data['cap'];
 				}
 				else
 				{
-					$res 	= ShMapperRequest::insert($data);
-					$msg	= ShMapper::$options['shm_succ_request_text'];
+					$res 	= ShmMapperRequest::insert($data);
+					$msg	= ShmShmapper::$options['shm_succ_request_text'];
 				}
 				
 				$d = array(	
@@ -277,7 +277,7 @@ class ShMapper_ajax
 						"msg"	=> $msg,
 						"res"	=> $res,
 						//"grec"	=> $grec,
-						//'grecaptcha' => ShMapper::$options['shm_settings_captcha']
+						//'grecaptcha' => ShmShmapper::$options['shm_settings_captcha']
 					)
 				);
 				break;	
@@ -342,7 +342,7 @@ class ShMapper_ajax
 					"location"		=> $data["location"],
 					"color"			=> get_term_meta($type->term_id, "color", true),
 					"height"		=> get_term_meta($type->term_id, "height", true),
-					"icon"			=> ShMapPointType::get_icon_src($type->term_id)[0],
+					"icon"			=> ShmMapPointType::get_icon_src($type->term_id)[0],
 					"term_id"		=> $data['type'],
 					"mapid"			=> "ShmMap".$data['map_id'].$data['map_id']
 				];
@@ -357,18 +357,18 @@ class ShMapper_ajax
 				break;
 			case "shm_voc":	
 				$voc = $params[1];
-				ShMapper::$options[$voc] = $params[2];
-				ShMapper::update_options();
+				ShmShmapper::$options[$voc] = $params[2];
+				ShmShmapper::update_options();
 				$d = array(	
 					$params[0],
 					array( 
-						"msg"	=> __("Change Vocabulaty: ", SHMAPPER) . $voc.": ".ShMapper::$options[$voc],
+						"msg"	=> __("Change Vocabulaty: ", SHMAPPER) . $voc.": ".ShmShmapper::$options[$voc],
 					)
 				);
 				break; 
 			case "map_api":	
-				ShMapper::$options['map_api'] = $params[1];
-				ShMapper::update_options();
+				ShmShmapper::$options['map_api'] = $params[1];
+				ShmShmapper::update_options();
 				$d = array(	
 					$params[0],
 					array( 
@@ -377,8 +377,8 @@ class ShMapper_ajax
 				);
 				break; 
 			case "shm_map_is_crowdsourced":	
-				ShMapper::$options['shm_map_is_crowdsourced'] = $params[1];
-				ShMapper::update_options();
+				ShmShmapper::$options['shm_map_is_crowdsourced'] = $params[1];
+				ShmShmapper::update_options();
 				$d = array(	
 					$params[0],
 					array( 
@@ -387,8 +387,8 @@ class ShMapper_ajax
 				);
 				break; 
 			case "shm_map_marker_premoderation":	
-				ShMapper::$options['shm_map_marker_premoderation'] = $params[1];
-				ShMapper::update_options();
+				ShmShmapper::$options['shm_map_marker_premoderation'] = $params[1];
+				ShmShmapper::update_options();
 				$d = array(	
 					$params[0],
 					array( 
@@ -397,8 +397,8 @@ class ShMapper_ajax
 				);
 				break; 
 			case "shm_reload":	
-				ShMapper::$options['shm_reload'] = $params[1];
-				ShMapper::update_options();
+				ShmShmapper::$options['shm_reload'] = $params[1];
+				ShmShmapper::update_options();
 				$d = array(	
 					$params[0],
 					array( 
@@ -407,8 +407,8 @@ class ShMapper_ajax
 				);
 				break; 
 			case "shm_settings_captcha":	
-				ShMapper::$options['shm_settings_captcha'] = $params[1];
-				ShMapper::update_options();
+				ShmShmapper::$options['shm_settings_captcha'] = $params[1];
+				ShmShmapper::update_options();
 				$d = array(	
 					$params[0],
 					array( 
@@ -417,19 +417,19 @@ class ShMapper_ajax
 				);
 				break; 
 			case "shm_captcha_siteKey":	
-				ShMapper::$options['shm_captcha_siteKey'] = $params[1];
-				ShMapper::update_options();
+				ShmShmapper::$options['shm_captcha_siteKey'] = $params[1];
+				ShmShmapper::update_options();
 				$d = array(	
 					$params[0],
 					array( 
 						"msg"	=> __( "Set key" , SHMAPPER),
-						"hide_dang" => $params[1] != "" && ShMapper::$options['shm_captcha_secretKey'] != "" ? 1 : 0
+						"hide_dang" => $params[1] != "" && ShmShmapper::$options['shm_captcha_secretKey'] != "" ? 1 : 0
 					)
 				);
 				break; 
 			case "shm_captcha_secretKey":	
-				ShMapper::$options['shm_captcha_secretKey'] = $params[1];
-				ShMapper::update_options();
+				ShmShmapper::$options['shm_captcha_secretKey'] = $params[1];
+				ShmShmapper::update_options();
 				$d = array(	
 					$params[0],
 					array( 

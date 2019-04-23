@@ -1,5 +1,5 @@
 <?php 
-	class SMC_Post
+	class Shm_Post
 	{
 		public $id;
 		public $ID;
@@ -52,8 +52,8 @@
 		function doubled()
 		{
 			$metas		= array('post_title'=>$this->body->post_title, 'post_content'  => $this->body->post_content);
-			require_once(SHM_REAL_PATH."class/SMC_Object_type.php");
-			$SMC_Object_Type	= new SMC_Object_Type();
+			require_once(SHM_REAL_PATH."class/Shm_Object_Type.php");
+			$SMC_Object_Type	= new Shm_Object_Type();
 			$object				= $SMC_Object_Type->object;
 			foreach($object[static::get_type()] as $key=>$val)
 			{
@@ -233,7 +233,7 @@
 				$args['meta_query'][] = $arr;
 				
 			}
-			//insertLog("SMC_Post", array("action" => "get_all_ids", "args"=>$args));
+			//insertLog("Shm_Post", array("action" => "get_all_ids", "args"=>$args));
 			static::$all_ids		= get_posts($args);
 			return static::$all_ids;
 		}
@@ -248,7 +248,7 @@
 			$ids					= array();
 			foreach($post_ids as $post_id)
 			{
-				if( $post_id instanceof SMC_Post )
+				if( $post_id instanceof Shm_Post )
 					$ids[]			= $post_id->id;
 				else if( $post_id instanceof WP_Post )
 					$ids[]			= $post_id->ID;
@@ -347,8 +347,8 @@
 		 	
 		static function add_views_column( $columns )
 		{
-			require_once(SHM_REAL_PATH."class/SMC_Object_type.php");
-			$SMC_Object_type	= SMC_Object_Type::get_instance();
+			require_once(SHM_REAL_PATH."class/Shm_Object_Type.php");
+			$SMC_Object_type	= Shm_Object_Type::get_instance();
 			$obj				= $SMC_Object_type->object [forward_static_call_array( array( get_called_class(),"get_type"), array()) ];
 			$posts_columns = array(
 				"cb" 				=> " ",
@@ -367,9 +367,9 @@
 		static function fill_views_column($column_name, $post_id) 
 		{	
 			$p					= static::get_instance($post_id);
-			require_once(SHM_REAL_PATH."class/SMC_Object_type.php");
+			require_once(SHM_REAL_PATH."class/Shm_Object_Type.php");
 				
-			$SMC_Object_type	= SMC_Object_type::get_instance();
+			$SMC_Object_type	= Shm_Object_Type::get_instance();
 			$obj				= $SMC_Object_type->object [forward_static_call_array( array( get_called_class(),"get_type"), array()) ];
 			
 			switch( $column_name) 
@@ -514,8 +514,8 @@
 			}
 			
 			$p					= static::get_instance($post_id);
-			require_once(SHM_REAL_PATH."class/SMC_Object_type.php");				
-			$SMC_Object_type	= SMC_Object_type::get_instance();
+			require_once(SHM_REAL_PATH."class/Shm_Object_Type.php");
+			$SMC_Object_type	= Shm_Object_Type::get_instance();
 			$obj				= $SMC_Object_type->object [forward_static_call_array( array( get_called_class(),"get_type"), array()) ];
 			
 			?>
@@ -579,8 +579,8 @@
 		{
 			do_action("shmapper_bulk_before");
 			$post_ids	= ( ! empty( $_POST[ 'post_ids' ] ) ) ? $_POST[ 'post_ids' ] : array();
-			require_once(SHM_REAL_PATH."class/SMC_Object_type.php");				
-			$SMC_Object_type	= SMC_Object_type::get_instance();
+			require_once(SHM_REAL_PATH."class/Shm_Object_Type.php");
+			$SMC_Object_type	= Shm_Object_Type::get_instance();
 			$obj				= $SMC_Object_type->object [forward_static_call_array( array( get_called_class(),"get_type"), array()) ];		
 			
 			if ( ! empty( $post_ids ) && is_array( $post_ids ) )			
@@ -650,8 +650,8 @@
 		}
 		static function view_admin_edit($obj)
 		{			
-			require_once(SHM_REAL_PATH."class/SMC_Object_type.php");
-			$SMC_Object_type	= SMC_Object_Type::get_instance();
+			require_once(SHM_REAL_PATH."class/Shm_Object_Type.php");
+			$SMC_Object_type	= Shm_Object_Type::get_instance();
 			$bb				= $SMC_Object_type->object [forward_static_call_array( array( get_called_class(),"get_type"), array()) ];	
 			foreach($bb as $key=>$value)
 			{

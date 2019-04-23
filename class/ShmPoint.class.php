@@ -1,5 +1,5 @@
 <?php
-class ShmPoint extends SMC_Post
+class ShmPoint extends Shm_Post
 {
 	static function init()
 	{
@@ -51,8 +51,8 @@ class ShmPoint extends SMC_Post
 	
 	static function view_admin_edit($obj)
 	{
-		require_once(SHM_REAL_PATH."class/SMC_Object_type.php");
-		$SMC_Object_type	= SMC_Object_Type::get_instance();
+		require_once(SHM_REAL_PATH."class/Shm_Object_Type.php");
+		$SMC_Object_type	= Shm_Object_Type::get_instance();
 		$bb					= $SMC_Object_type->object [static::get_type()];
 		foreach($bb as $key=>$value)
 		{
@@ -103,7 +103,7 @@ class ShmPoint extends SMC_Post
 		$html .="<div class='shm-row'>
 			<div class='shm-3 sh-right sh-align-middle'>".__("Map marker type", SHMAPPER). "</div>
 			<div class='shm-9'>".
-				$h = ShMapPointType::get_ganre_swicher([
+				$h = ShmMapPointType::get_ganre_swicher([
 					'selected' 	=> $term_id,
 					'prefix'	=> "point_type",
 					'col_width'	=> 3,
@@ -253,7 +253,7 @@ class ShmPoint extends SMC_Post
 					foreach($terms as $term)
 					{
 						//$term = get_term($obj->get_meta("type"), SHM_POINT_TYPE);
-						echo ShMapPointType::get_icon($term);
+						echo ShmMapPointType::get_icon($term);
 					}
 				else
 				{
@@ -300,7 +300,7 @@ class ShmPoint extends SMC_Post
 			</div>
 			<div class='shm-12' onclick='this.classList.remove(\"shm-alert\");'>
 				<label>" . __("Type", SHMAPPER) . "</label>".
-				ShMapPointType::get_ganre_swicher( ["name"=>"shm-new-point-type", "prefix" => "shm-new-type"],  "radio" ).
+				ShmMapPointType::get_ganre_swicher( ["name"=>"shm-new-point-type", "prefix" => "shm-new-type"],  "radio" ).
 			"</div>
 			<div class='shm-12'>
 				<label>" . __("Address", SHMAPPER) . "</label>
@@ -370,7 +370,7 @@ class ShmPoint extends SMC_Post
 ","
 
 "];
-		$mapType 	= ShmMap::get_map_types()[ ShMapper::$options['map_api'] ][0];
+		$mapType 	= ShmMap::get_map_types()[ ShmShmapper::$options['map_api'] ][0];
 		$types		= wp_get_object_terms($this->id, SHM_POINT_TYPE);
 		$type		= $types[0];
 		$term_id	= $type->term_id ? $type->term_id : -1;
@@ -385,8 +385,8 @@ class ShmPoint extends SMC_Post
 		$zoom 		= $zoom ? $zoom : 11;
 		$color 		= get_term_meta($type->term_id, "color", true);
 		$height 	= get_term_meta($type->term_id, "height", true);
-		$icon 		= ShMapPointType::get_icon_src( $type->term_id )[0];
-		$width 		= ShMapPointType::get_icon_src( $type->term_id )[2]/ShMapPointType::get_icon_src( $type->term_id )[1] * $this->height ;
+		$icon 		= ShmMapPointType::get_icon_src( $type->term_id )[0];
+		$width 		= ShmMapPointType::get_icon_src( $type->term_id )[2]/ShmMapPointType::get_icon_src( $type->term_id )[1] * $this->height ;
 		//$type 		= $type->name;
 		//$term_id 	= $type->term_id;
 		
@@ -414,7 +414,7 @@ class ShmPoint extends SMC_Post
 			p.height 		= '" . get_term_meta($term_id, "height", true) . "'; 
 			p.width 		= '" . get_term_meta($term_id, "width", true) . "'; 
 			p.term_id 		= '" . $term_id . "'; 
-			p.icon 			= '" . (ShMapPointType::get_icon_src( $term_id )[0]) . "'; 
+			p.icon 			= '" . (ShmMapPointType::get_icon_src( $term_id )[0]) . "'; 
 			p.color 		= '" . get_term_meta($term_id, 'color', true) . "';
 			points.push(p);
 			";	
